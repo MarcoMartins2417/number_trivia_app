@@ -1,3 +1,4 @@
+import 'package:dartz/dartz.dart';
 import 'package:mockito/mockito.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:number_trivia_app/core/platform/network_info.dart';
@@ -47,6 +48,19 @@ void main() {
       setUp(() {
         when(mockNetworkInfo.isConnected).thenAnswer((_) async => true);
       });
+
+      test(
+        'should return remote data when the call to remote data source is successful',
+        () async {
+          // arrange
+          when(mockRemoteDataSource.getConcreteNumberTrivia(tNumber)).thenAnswer((_) async => tNumberTriviaModel);
+          // act
+          final result = await repository.getConcreteNumberTrivia(tNumber);
+          // assert
+          verify(mockRemoteDataSource.getConcreteNumberTrivia(tNumber));
+          expect(result, equals(Right(tNumberTrivia)));
+        },
+      );
     });
 
     group('device is offline', () {
