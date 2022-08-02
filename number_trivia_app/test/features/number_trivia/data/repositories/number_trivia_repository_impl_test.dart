@@ -42,5 +42,17 @@ void main() {
       // assert
       verify(mockNetworkInfo.isConnected);
     });
+
+    group('device is online', () {
+      setUp(() {
+        when(mockNetworkInfo.isConnected).thenAnswer((_) async => true);
+      });
+    });
+
+    group('device is offline', () {
+      setUp(() {
+        when(mockNetworkInfo.isConnected).thenAnswer((_) async => false);
+      });
+    });
   });
 }
