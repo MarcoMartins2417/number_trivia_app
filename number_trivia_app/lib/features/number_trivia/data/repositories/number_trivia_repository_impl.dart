@@ -21,11 +21,10 @@ class NumberTriviaRepositoryImpl implements NumberTriviaRepository {
 
   @override
   Future<Either<Failure, NumberTrivia>> getConcreteNumberTrivia(int number) {
-    throw UnimplementedError();
+    return null;
   }
 
   @override
   Future<Either<Failure, NumberTrivia>> getRandomNumberTrivia() {
-    throw UnimplementedError();
-  }
+    return null;  }
 }
