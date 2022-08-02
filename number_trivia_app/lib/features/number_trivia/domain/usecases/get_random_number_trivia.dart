@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
-import 'package:equatable/equatable.dart';
-import 'package:number_trivia_app/core/error/failures.dart';
-import 'package:number_trivia_app/core/usecases/usecase.dart';
-import 'package:number_trivia_app/features/number_trivia/domain/entities/number_trivia.dart';
+
+import '../../../../core/error/failures.dart';
+import '../../../../core/usecases/usecase.dart';
+import '../entities/number_trivia.dart';
 import '../repositories/number_trivia_repository.dart';
 
 class GetRandomNumberTrivia implements UseCase<NumberTrivia, NoParams> {
@@ -15,9 +15,4 @@ class GetRandomNumberTrivia implements UseCase<NumberTrivia, NoParams> {
     return await repository.getRandomNumberTrivia();
   }
 
-}
-
-class NoParams extends Equatable {
-  @override
-  List<Object> get props => throw UnimplementedError();
 }
