@@ -10,9 +10,5 @@ class NetworkInfoImpl implements NetworkInfo{
   NetworkInfoImpl(this.connectionChecker);
   
   @override
-  Future<bool> get isConnected {
-    connectionChecker.hasConnection;
-    return Future.value(true);
-  }
-
+  Future<bool> get isConnected => connectionChecker.hasConnection;
 }
