@@ -25,7 +25,7 @@ void main() {
       'should return NumberTrivia from SharedPreferences when there is one in the cache',
       () async {
         // arrange
-        when(mockSharedPreferences.getString(any)).thenReturn(fixture('trivia.cached.json'));
+        when(mockSharedPreferences.getString(any)).thenReturn(fixture('trivia_cached.json'));
         // act
         final result = await dataSource.getLastNumberTrivia();
         // assert
