@@ -43,8 +43,21 @@ void main() {
         // act
         final call = dataSource.getLastNumberTrivia;
         // assert
-
         expect(() => call(), throwsA(TypeMatcher<CacheException>()));
+      },
+    );
+  });
+
+  group('cacheNumberTrivia', () {
+    final tNumberTriviaModel = NumberTriviaModel(text: 'Test Trivia', number: 1);
+    test(
+      'should call SharedPreferences to cache the data',
+      () async {
+        // act
+        dataSource.cacheNumberTrivia(tNumberTriviaModel);
+        // assert
+        final expectedJsonString = json.encode(tNumberTriviaModel.toJson());
+        verify(mockSharedPreferences.setString(CACHED_NUMBER_TRIVIA, expectedJsonString));
       },
     );
   });
