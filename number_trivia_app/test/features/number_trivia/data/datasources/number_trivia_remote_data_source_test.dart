@@ -27,7 +27,7 @@ void main() {
 
   void setUpMockHttpClientFailure404() {
     when(mockHttpClient.get(any, headers: anyNamed('headers')))
-            .thenAnswer((_) async => http.Response('Something went wrong', 404));
+        .thenAnswer((_) async => http.Response('Something went wrong', 404));
   }
 
   group('getConcreteNumberTrivia', () {
