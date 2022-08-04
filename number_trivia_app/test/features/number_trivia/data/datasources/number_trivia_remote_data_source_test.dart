@@ -5,7 +5,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:number_trivia_app/core/error/exceptions.dart';
 import 'package:number_trivia_app/features/number_trivia/data/datasources/number_trivia_remote_data_source.dart';
 import 'package:number_trivia_app/features/number_trivia/data/models/number_trivia_model.dart';
-import 'package:matcher/matcher.dart';
 import 'package:http/http.dart' as http;
 
 import '../../../../fixtures/fixture_reader.dart';
@@ -68,6 +67,46 @@ void main() {
         final call = dataSource.getConcreteNumberTrivia;
         // assert
         expect(() => call(tNumber), throwsA(TypeMatcher<ServerException>()));
+      },
+    );
+  });
+
+  group('getRandomTrivia', () {
+    final tNumberTriviaModel = NumberTriviaModel.fromJson(json.decode(fixture('trivia.json')));
+
+    test(
+      'should perform a GET request on a URL with a number being the endpoint and with application/json header',
+      () async {
+        // arrange
+        setUpMockHttpClientSuccess200();
+        // act
+        dataSource.getRandomNumberTrivia();
+        // assert
+        verify(mockHttpClient.get('http://numbersapi.com/random', headers: {'Content-Type': 'application/json'}));
+      },
+    );
+
+    test(
+      'should return NumberTrivia when the response code is 200 (success)',
+      () async {
+        // arrange
+        setUpMockHttpClientSuccess200();
+        // act
+        final result = await dataSource.getRandomNumberTrivia();
+        // assert
+        expect(result, equals(tNumberTriviaModel));
+      },
+    );
+
+    test(
+      'should throw a ServerException when the response code is 404 or other',
+      () async {
+        // arrange
+        setUpMockHttpClientFailure404();
+        // act
+        final call = dataSource.getRandomNumberTrivia;
+        // assert
+        expect(() => call(), throwsA(TypeMatcher<ServerException>()));
       },
     );
   });
