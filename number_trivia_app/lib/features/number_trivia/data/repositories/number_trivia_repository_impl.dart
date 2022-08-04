@@ -17,7 +17,7 @@ class NumberTriviaRepositoryImpl implements NumberTriviaRepository {
     @required this.remoteDataSource,
     @required this.localDataSource,
     @required this.networkInfo,
-    }); 
+  });
 
   @override
   Future<Either<Failure, NumberTrivia>> getConcreteNumberTrivia(int number) {
