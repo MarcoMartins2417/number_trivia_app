@@ -33,7 +33,14 @@ class NumberTriviaBloc extends Bloc<NumberTriviaEvent, NumberTriviaState> {
   @override
   Stream<NumberTriviaState> mapEventToState(NumberTriviaEvent event) async* {
     if (event is GetTriviaForConcreteNumber) {
-      inputConverter.stringToUnsignedInteger(event.numberString);
-    }
+      final inputEither = inputConverter.stringToUnsignedInteger(event.numberString);
+
+      yield* inputEither.fold(
+        (failure) async* {
+        yield Error(message: INVALID_INPUT_FAILURE_MESSAGE);
+      }
+      , (integer) => throw UnimplementedError(),
+      );
+    };
   }
 }
