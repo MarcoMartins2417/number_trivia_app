@@ -1,3 +1,4 @@
+import 'package:dartz/dartz.dart';
 import 'package:number_trivia_app/core/error/failures.dart';
 import 'package:number_trivia_app/core/usecases/usecase.dart';
 import 'package:number_trivia_app/core/util/input_converter.dart';
@@ -33,5 +34,24 @@ void main() {
 
   test('iniciatState should be empty', () {
     expect(bloc.initialState, equals(Empty()));
+  });
+
+  group('GetTriviaForConcreteNumber', () {
+    final tNumberString = '1';
+    final tNumberParsed = 1;
+    final tNumberTrivia = NumberTrivia(text: 'Test Trivia', number: 1);
+
+    test(
+      'should call the InputConverter to validate and convert the string to an unsigned integer',
+      () async {
+        // arrange
+        when(mockInputConverter.stringToUnsignedInteger(any)).thenReturn(Right((tNumberParsed)));
+        // act
+        bloc.add(GetTriviaForConcreteNumber(tNumberString));
+        await untilCalled(mockInputConverter.stringToUnsignedInteger(any));
+        // assert
+        verify(mockInputConverter.stringToUnsignedInteger(tNumberString));
+      },
+    );
   });
 }
