@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
@@ -16,6 +18,8 @@ class NumberTriviaBloc extends Bloc<NumberTriviaEvent, NumberTriviaState> {
     @required GetRandomNumberTrivia random,
     @required this.inputConverter,
   })  : assert(concrete != null),
+        assert(random != null),
+        assert(inputConverter != null),
         getConcreteNumberTrivia = concrete,
         getRandomNumberTrivia = random;
 
