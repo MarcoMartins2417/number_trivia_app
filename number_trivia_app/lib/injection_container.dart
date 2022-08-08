@@ -14,10 +14,11 @@ final sl = GetIt.instance;
 
 void init() {
   // Features - Number Trivia - Registration
-  sl.registerFactory((() => NumberTriviaBloc(concrete: sl(), random: sl(), inputConverter: sl()))); // Factory - Always instanciate a new thing from the class
+  sl.registerFactory((() => NumberTriviaBloc(
+      concrete: sl(), random: sl(), inputConverter: sl()))); // Factory - Always instanciate a new thing from the class
 
   sl.registerLazySingleton(() => GetConcreteNumberTrivia(sl()));
-  sl.registerLazySingleton(() => GetRandomNumberTrivia(sl()));  // Cache and give out the same instance without instanciate a new one
+  sl.registerLazySingleton(() => GetRandomNumberTrivia(sl())); // Cache and give out the same instance without instanciate a new one
   sl.registerLazySingleton<NumberTriviaRepository>(() => NumberTriviaRepositoryImpl(remoteDataSource: sl(), localDataSource: sl(), networkInfo: sl()));
 
   sl.registerLazySingleton<NumberTriviaRemoteDataSource>(() => NumberTriviaRemoteDataSourceImpl(client: sl()));
@@ -25,7 +26,8 @@ void init() {
   sl.registerLazySingleton<NumberTriviaLocalDataSource>(() => NumberTriviaLocalDataSourceImpl(sharedPreferences: sl()));
 
   // Core stuff
-
+  sl.registerLazySingleton(() => InputConverter());
+  sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(sl()));
 
   // External stuff
 }
