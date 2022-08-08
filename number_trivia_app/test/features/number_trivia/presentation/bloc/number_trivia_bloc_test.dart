@@ -82,7 +82,7 @@ void main() {
         bloc.add(GetTriviaForConcreteNumber(tNumberString));
         await untilCalled(mockGetConcreteNumberTrivia(any));
         // assert
-        verify(mockGetConcreteNumberTrivia(Params(number: tNumberParsed)));
+        verifyNever(mockGetConcreteNumberTrivia(Params(number: tNumberParsed)));
       },
     );
 
