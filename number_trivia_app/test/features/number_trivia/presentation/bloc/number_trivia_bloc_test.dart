@@ -26,8 +26,7 @@ void main() {
     mockGetRandomNumberTrivia = MockGetRandomNumberTrivia();
     mockInputConverter = MockInputConverter();
 
-    bloc = NumberTriviaBloc(
-        concrete: mockGetConcreteNumberTrivia, random: mockGetRandomNumberTrivia, inputConverter: mockInputConverter);
+    bloc = NumberTriviaBloc(concrete: mockGetConcreteNumberTrivia, random: mockGetRandomNumberTrivia, inputConverter: mockInputConverter);
   });
 
   test('iniciatState should be empty', () {
