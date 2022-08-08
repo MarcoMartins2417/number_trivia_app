@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 
 @immutable
 abstract class NumberTriviaEvent extends Equatable {
-
   @override
   List<Object> get props => [];
 }
