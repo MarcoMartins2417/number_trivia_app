@@ -59,6 +59,7 @@ void main() {
       'should emit [Error] when the input is invalid',
       () async {
         // arrange
+        setUpMockInputConverterSuccess();
         when(mockInputConverter.stringToUnsignedInteger(any)).thenReturn(Left(InvalidInputFailure()));
         // assert later
         final expected = [
