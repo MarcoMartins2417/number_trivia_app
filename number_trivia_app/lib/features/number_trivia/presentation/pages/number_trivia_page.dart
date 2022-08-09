@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:number_trivia_app/features/number_trivia/domain/entities/number_trivia.dart';
 import 'package:number_trivia_app/features/number_trivia/presentation/bloc/number_trivia_bloc.dart';
 
 import '../../../../injection_container.dart';
@@ -24,7 +25,15 @@ class NumberTriviaPage extends StatelessWidget {
                 // ignore: missing_return
                 builder: (context, state) {
                   if (state is Empty) {
-                    return MessageDisplay(message: 'Start searching',
+                    return MessageDisplay(
+                      message: 'Start searching',
+                    );
+                  } else if (state is Loading) {
+                    return LoadingWidget();
+                  } else if (state is Loaded) {
+                  } else if (state is Error) {
+                    return MessageDisplay(
+                      message: state.message,
                     );
                   }
                 },
@@ -57,14 +66,71 @@ class MessageDisplay extends StatelessWidget {
   final String message;
 
   const MessageDisplay({
-    Key key, this.message,
+    Key key,
+    this.message,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: MediaQuery.of(context).size.height / 3,
-      child: Text(message),
+      child: Center(
+        child: SingleChildScrollView(
+          child: Text(
+            message,
+            style: TextStyle(fontSize: 25),
+            textAlign: TextAlign.center,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class LoadingWidget extends StatelessWidget {
+  const LoadingWidget({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: MediaQuery.of(context).size.height / 3,
+      child: Center(
+        child: CircularProgressIndicator(),
+      ),
+    );
+  }
+}
+
+class TriviaDisplay extends StatelessWidget {
+  final NumberTrivia numberTrivia;
+
+  const TriviaDisplay({
+    Key key,
+    @required this.numberTrivia,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: MediaQuery.of(context).size.height / 3,
+      child: Column(
+        children: <Widget>[
+          Text(numberTrivia.number.toString(), style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold)),
+          Expanded(
+            child: Center(
+              child: SingleChildScrollView(
+                child: Text(
+                  numberTrivia.text,
+                  style: TextStyle(fontSize: 25),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
