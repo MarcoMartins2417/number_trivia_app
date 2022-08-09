@@ -31,6 +31,7 @@ class NumberTriviaPage extends StatelessWidget {
                   } else if (state is Loading) {
                     return LoadingWidget();
                   } else if (state is Loaded) {
+                    return TriviaDisplay(numberTrivia: state.trivia);
                   } else if (state is Error) {
                     return MessageDisplay(
                       message: state.message,
