@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:number_trivia_app/features/number_trivia/presentation/bloc/number_trivia_bloc.dart';
 
 import '../../../../injection_container.dart';
+import '../bloc/number_trivia_state.dart';
 
 class NumberTriviaPage extends StatelessWidget {
   @override
@@ -19,9 +20,14 @@ class NumberTriviaPage extends StatelessWidget {
           child: Column(
             children: <Widget>[
               SizedBox(height: 10),
-              Container(
-                height: MediaQuery.of(context).size.height / 3,
-                child: Placeholder(),
+              BlocBuilder<NumberTriviaBloc, NumberTriviaState>(
+                // ignore: missing_return
+                builder: (context, state) {
+                  if (state is Empty) {
+                    return MessageDisplay(message: 'Start searching',
+                    );
+                  }
+                },
               ),
               SizedBox(height: 20),
               Column(
@@ -43,6 +49,22 @@ class NumberTriviaPage extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class MessageDisplay extends StatelessWidget {
+  final String message;
+
+  const MessageDisplay({
+    Key key, this.message,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: MediaQuery.of(context).size.height / 3,
+      child: Text(message),
     );
   }
 }
