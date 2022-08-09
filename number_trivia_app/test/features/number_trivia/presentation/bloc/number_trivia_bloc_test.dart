@@ -58,6 +58,7 @@ void main() {
       'should emit [Error] when the input is invalid',
       () async {
         // arrange
+        setUpMockInputConverterSuccess();
         when(mockInputConverter.stringToUnsignedInteger(any)).thenReturn(Left(InvalidInputFailure()));
         // assert later
         final expected = [
@@ -80,7 +81,7 @@ void main() {
         bloc.add(GetTriviaForConcreteNumber(tNumberString));
         await untilCalled(mockGetConcreteNumberTrivia(any));
         // assert
-        verify(mockGetConcreteNumberTrivia(Params(number: tNumberParsed)));
+        verifyNever(mockGetConcreteNumberTrivia(Params(number: tNumberParsed)));
       },
     );
 
