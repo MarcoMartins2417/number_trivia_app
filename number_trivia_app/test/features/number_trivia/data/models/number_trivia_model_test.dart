@@ -35,7 +35,10 @@ void main() {
         // act
         final result = tNumberTriviaModel.toJson();
         // assert
-        final expectedMap = {"text": "Test Text", "number": 1,};
+        final expectedMap = {
+          "text": "Test Text",
+          "number": 1,
+        };
         expect(result, expectedMap);
       },
     );
