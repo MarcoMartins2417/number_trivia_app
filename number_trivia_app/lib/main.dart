@@ -12,6 +12,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Number Trivia',
+      theme: ThemeData(
+        primaryColor: Colors.green.shade800,
+        accentColor: Colors.green.shade600,
+      ),
       home: NumberTriviaPage()
     );
   }
