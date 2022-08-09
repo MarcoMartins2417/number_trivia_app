@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:meta/meta.dart';
-import 'package:number_trivia_app/core/error/exceptions.dart';
 
 import '../../../../core/error/failures.dart';
 import '../../../../core/error/exceptions.dart';
@@ -37,9 +36,7 @@ class NumberTriviaRepositoryImpl implements NumberTriviaRepository {
     });
   }
 
-  Future<Either<Failure, NumberTrivia>> _getTrivia(
-    _ConcreteOrRandomChooser getConcreteOrRandom
-  ) async {
+  Future<Either<Failure, NumberTrivia>> _getTrivia(_ConcreteOrRandomChooser getConcreteOrRandom) async {
     if (await networkInfo.isConnected) {
       try {
         final remoteTrivia = await getConcreteOrRandom();
