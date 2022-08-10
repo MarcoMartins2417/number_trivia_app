@@ -12,9 +12,15 @@ class NumberTriviaPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Number Trivia')),
+      appBar: AppBar(
+        title: Text(
+          'Number Trivia',
+        ),
+      ),
       body: SingleChildScrollView(
-        child: buildBody(context),
+        child: buildBody(
+          context,
+        ),
       ),
     );
   }
@@ -27,7 +33,9 @@ class NumberTriviaPage extends StatelessWidget {
           padding: const EdgeInsets.all(10),
           child: Column(
             children: <Widget>[
-              SizedBox(height: 10),
+              SizedBox(
+                height: 10,
+              ),
               BlocBuilder<NumberTriviaBloc, NumberTriviaState>(
                 // ignore: missing_return
                 builder: (context, state) {
@@ -38,7 +46,9 @@ class NumberTriviaPage extends StatelessWidget {
                   } else if (state is Loading) {
                     return LoadingWidget();
                   } else if (state is Loaded) {
-                    return TriviaDisplay(numberTrivia: state.trivia);
+                    return TriviaDisplay(
+                      numberTrivia: state.trivia,
+                    );
                   } else if (state is Error) {
                     return MessageDisplay(
                       message: state.message,
@@ -46,8 +56,10 @@ class NumberTriviaPage extends StatelessWidget {
                   }
                 },
               ),
-              SizedBox(height: 20),
-              TriviaControls()
+              SizedBox(
+                height: 20,
+              ),
+              TriviaControls(),
             ],
           ),
         ),
