@@ -1,4 +1,3 @@
-// ignore_for_file: unused_label
 import 'package:dartz/dartz.dart' show Either;
 import 'package:flutter/material.dart';
 import 'package:number_trivia_app/core/usecases/usecase.dart';
@@ -18,7 +17,7 @@ const String INVALID_INPUT_FAILURE_MESSAGE = 'Invalid Input - The number must be
 
 class NumberTriviaPage extends StatefulWidget {
   @override
-  State<NumberTriviaPage> createState() => NumberTriviaPageState(concrete: sl(), random: sl(), inputConverter: sl()); // Factory - Always instanciate a new thing from the class
+  State<NumberTriviaPage> createState() => NumberTriviaPageState(concrete: sl(), random: sl(), inputConverter: sl());
 }
 
 class NumberTriviaPageState extends State<NumberTriviaPage> {
@@ -28,7 +27,6 @@ class NumberTriviaPageState extends State<NumberTriviaPage> {
   final controller = TextEditingController();
   String inputStr;
 
-  // Bloc
   final GetConcreteNumberTrivia getConcreteNumberTrivia;
   final GetRandomNumberTrivia getRandomNumberTrivia;
   final InputConverter inputConverter;
@@ -42,12 +40,6 @@ class NumberTriviaPageState extends State<NumberTriviaPage> {
         assert(inputConverter != null),
         getConcreteNumberTrivia = concrete,
         getRandomNumberTrivia = random;
-  
-  void changeState(NumberTriviaState state) {
-    setState(() {
-      this.state = state;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -111,7 +103,7 @@ class NumberTriviaPageState extends State<NumberTriviaPage> {
             inputStr = value;
           },
           onSubmitted: (_) {
-            dispatchConcrete();
+            onGetConcreteTriviaPassed();
           },
         ),
         SizedBox(
@@ -126,7 +118,7 @@ class NumberTriviaPageState extends State<NumberTriviaPage> {
                 ),
                 color: Theme.of(context).accentColor,
                 textTheme: ButtonTextTheme.primary,
-                onPressed: dispatchConcrete,
+                onPressed: onGetConcreteTriviaPassed,
               ),
             ),
             SizedBox(
@@ -137,7 +129,7 @@ class NumberTriviaPageState extends State<NumberTriviaPage> {
                 child: Text(
                   'Get random trivia',
                 ),
-                onPressed: dispatchRandom,
+                onPressed: onGetRandomTriviaPassed,
               ),
             ),
           ],
@@ -146,7 +138,15 @@ class NumberTriviaPageState extends State<NumberTriviaPage> {
     );
   }
 
-  void dispatchConcrete() {
+  void changeState(NumberTriviaState state) {
+    setState(
+      () {
+        this.state = state;
+      },
+    );
+  }
+
+  void onGetConcreteTriviaPassed() {
     controller.clear();
 
     final inputEither = inputConverter.stringToUnsignedInteger(inputStr);
@@ -162,10 +162,10 @@ class NumberTriviaPageState extends State<NumberTriviaPage> {
     );
   }
 
-  Future<void> dispatchRandom() async {
+  Future<void> onGetRandomTriviaPassed() async {
     controller.clear();
 
-    Loading();
+    changeState(Loading());
     final failureOrTrivia = await getRandomNumberTrivia(NoParams());
     _eitherLoadedOrErrorState(failureOrTrivia);
   }
