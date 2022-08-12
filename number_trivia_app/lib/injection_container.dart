@@ -10,16 +10,12 @@ import 'features/number_trivia/data/repositories/number_trivia_repository_impl.d
 import 'features/number_trivia/domain/repositories/number_trivia_repository.dart';
 import 'features/number_trivia/domain/usecases/get_concrete_number_trivia.dart';
 import 'features/number_trivia/domain/usecases/get_random_number_trivia.dart';
-import 'features/number_trivia/presentation/bloc/bloc.dart';
 import 'package:http/http.dart' as http;
 
 final sl = GetIt.instance;
 
 Future<void> init() async {
   // Features - Number Trivia - Registration
-  sl.registerFactory((() => NumberTriviaBloc(
-      concrete: sl(), random: sl(), inputConverter: sl()))); // Factory - Always instanciate a new thing from the class
-
   sl.registerLazySingleton(() => GetConcreteNumberTrivia(sl()));
   sl.registerLazySingleton(() => GetRandomNumberTrivia(sl())); // Cache and give out the same instance without instanciate a new one
   sl.registerLazySingleton<NumberTriviaRepository>(() => NumberTriviaRepositoryImpl(remoteDataSource: sl(), localDataSource: sl(), networkInfo: sl()));
